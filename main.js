@@ -19,6 +19,10 @@ class Calculator {
     this.currentOperand *= -1;
   }
 
+  round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  }
+
   appendNumber(number) {
     if (number === '.' && this.currentOperand.includes('.')) {
       return;
@@ -99,16 +103,16 @@ class Calculator {
 
     switch (this.operation) {
       case '+':
-        computation = eval(prev + current);
+        computation = this.round((prev + current), 8);
         break;
       case '-':
-        computation = eval(prev - current);
+        computation = this.round((prev - current), 8);
         break;
       case '*':
-        computation = eval(prev * current);
+        computation = this.round((prev * current), 8);
         break;
       case '/':
-        computation = eval(prev / current);
+        computation = this.round((prev / current), 8);
         break;
       default:
         return;
@@ -160,6 +164,7 @@ const previousOperandTextElement = document.querySelector('[data-previous-operan
 const currentOperandTextElement = document.querySelector('[data-current-operand]');
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
+
 
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
